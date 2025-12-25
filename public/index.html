@@ -3,27 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caretrip - Your Travel Companion</title>
+    <title>Caretrip - We Care Your Travel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <!-- Top Bar -->
+    <div class="top-bar">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fas fa-plane-departure"></i> Caretrip</a>
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="tel:+917666917917" class="text-white text-decoration-none">
+                        <i class="fas fa-phone"></i> +91 7666917917
+                    </a>
+                </div>
+                <div>
+                    <a href="#" class="text-white text-decoration-none me-3">Quick Pay</a>
+                    <a href="#" class="text-white text-decoration-none">Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://www.caretrip.in/siteimages/logo_dark.png?v=2" alt="Caretrip" height="50">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#destinations">Destinations</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#hotels">Hotels</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#flights">Flights</a></li>
-                    <li class="nav-item" id="myBookingsNav" style="display:none;"><a class="nav-link" href="#bookings">My Bookings</a></li>
-                    <li class="nav-item" id="adminNav" style="display:none;"><a class="nav-link" href="#admin">Admin</a></li>
-                    <li class="nav-item" id="loginNav"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                    <li class="nav-item" id="myBookingsNav" style="display:none;">
+                        <a class="nav-link" href="#bookings">My Bookings</a>
+                    </li>
+                    <li class="nav-item" id="adminNav" style="display:none;">
+                        <a class="nav-link" href="#admin">Admin</a>
+                    </li>
+                    <li class="nav-item" id="loginNav">
+                        <a class="nav-link btn btn-primary text-white px-3" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </li>
                     <li class="nav-item" id="userNav" style="display:none;">
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -39,75 +61,114 @@
         </div>
     </nav>
 
-    <section id="home" class="hero-section">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <h1 class="display-3 fw-bold text-white mb-4">Discover Your Next Adventure</h1>
-            <p class="lead text-white mb-5">Explore the world with Caretrip</p>
-            
-            <div class="search-box">
-                <ul class="nav nav-tabs mb-3" role="tablist">
-                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#packagesTab">Packages</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#hotelsTab">Hotels</button></li>
-                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#flightsTab">Flights</button></li>
-                </ul>
-                
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="packagesTab">
-                        <div class="row g-3">
-                            <div class="col-md-8"><input type="text" class="form-control" id="packageSearch" placeholder="Where do you want to go?"></div>
-                            <div class="col-md-4"><button class="btn btn-warning w-100" onclick="searchPackages()"><i class="fas fa-search"></i> Search</button></div>
-                        </div>
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="container text-center">
+            <img src="https://www.caretrip.in/siteimages/web_banner1.png?version=5" alt="Call Now" class="img-fluid mb-4" style="max-width: 600px;">
+        </div>
+    </section>
+
+    <!-- Services Menu -->
+    <section class="services-menu py-4">
+        <div class="container">
+            <div class="row g-3 text-center">
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card" onclick="scrollToSection('flights')">
+                        <img src="https://www.caretrip.in/siteimages/icon_flight.png" alt="Flights">
+                        <p>Flights</p>
                     </div>
-                    <div class="tab-pane fade" id="hotelsTab">
-                        <div class="row g-3">
-                            <div class="col-md-8"><input type="text" class="form-control" id="hotelLocation" placeholder="Enter location"></div>
-                            <div class="col-md-4"><button class="btn btn-warning w-100" onclick="searchHotels()"><i class="fas fa-search"></i> Search</button></div>
-                        </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card" onclick="scrollToSection('hotels')">
+                        <img src="https://www.caretrip.in/siteimages/icon_hotel.png" alt="Hotels">
+                        <p>Hotels</p>
                     </div>
-                    <div class="tab-pane fade" id="flightsTab">
-                        <div class="row g-3">
-                            <div class="col-md-4"><input type="text" class="form-control" id="flightFrom" placeholder="From"></div>
-                            <div class="col-md-4"><input type="text" class="form-control" id="flightTo" placeholder="To"></div>
-                            <div class="col-md-4"><button class="btn btn-warning w-100" onclick="searchFlights()"><i class="fas fa-search"></i> Search</button></div>
-                        </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card">
+                        <img src="https://www.caretrip.in/siteimages/icon_activity.png" alt="Activities">
+                        <p>Activities</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card">
+                        <img src="https://www.caretrip.in/siteimages/icon_visa.png" alt="Visa">
+                        <p>Visa</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card" onclick="scrollToSection('destinations')">
+                        <img src="https://www.caretrip.in/siteimages/icon_packages.png" alt="Packages">
+                        <p>Packages</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card">
+                        <img src="https://www.caretrip.in/siteimages/icon_cruise.png" alt="Cruises">
+                        <p>Cruises</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card">
+                        <img src="https://www.caretrip.in/siteimages/icon_insurance.png" alt="Insurance">
+                        <p>Insurance</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 col-lg-1-5">
+                    <div class="service-card">
+                        <img src="https://www.caretrip.in/siteimages/icon_hotdeals.png" alt="Hot Deals">
+                        <p>Hot Deals</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="destinations" class="py-5">
+    <!-- Destinations Section -->
+    <section id="destinations" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-5">Popular Destinations</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title">POPULAR PACKAGES</h2>
+                <a href="#" class="text-primary">SEE ALL</a>
+            </div>
             <div class="row g-4" id="destinationsGrid"></div>
         </div>
     </section>
 
-    <section id="hotels" class="py-5 bg-light">
+    <!-- Hotels Section -->
+    <section id="hotels" class="py-5">
         <div class="container">
-            <h2 class="text-center mb-5">Featured Hotels</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title">FEATURED HOTELS</h2>
+                <a href="#" class="text-primary">SEE ALL</a>
+            </div>
             <div class="row g-4" id="hotelsGrid"></div>
         </div>
     </section>
 
-    <section id="flights" class="py-5">
+    <!-- Flights Section -->
+    <section id="flights" class="py-5 bg-light">
         <div class="container">
-            <h2 class="text-center mb-5">Available Flights</h2>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title">AVAILABLE FLIGHTS</h2>
+                <a href="#" class="text-primary">SEE ALL</a>
+            </div>
             <div class="row g-4" id="flightsGrid"></div>
         </div>
     </section>
 
-    <section id="bookings" class="py-5 bg-light" style="display:none;">
+    <!-- Bookings Section -->
+    <section id="bookings" class="py-5" style="display:none;">
         <div class="container">
-            <h2 class="text-center mb-5">My Bookings</h2>
+            <h2 class="section-title mb-4">My Bookings</h2>
             <div id="bookingsContent"></div>
         </div>
     </section>
 
-    <section id="admin" class="py-5" style="display:none;">
+    <!-- Admin Section -->
+    <section id="admin" class="py-5 bg-light" style="display:none;">
         <div class="container">
-            <h2 class="text-center mb-5">Admin Dashboard</h2>
+            <h2 class="section-title mb-4">Admin Dashboard</h2>
             <div class="row g-4" id="adminStats"></div>
             <div class="mt-5">
                 <h3>All Bookings</h3>
@@ -116,13 +177,40 @@
         </div>
     </section>
 
-    <footer class="bg-dark text-white py-4">
-        <div class="container text-center">
-            <p>&copy; 2024 Caretrip. All rights reserved.</p>
-            <div class="social-links mt-3">
-                <a href="#" class="text-white mx-2"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-instagram"></i></a>
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <img src="https://www.caretrip.in/siteimages/logo_dark.png?v=2" alt="Caretrip" height="50" class="mb-3">
+                    <p class="text-muted">We Care Your Travel</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#flights">Flights</a></li>
+                        <li><a href="#hotels">Hotels</a></li>
+                        <li><a href="#destinations">Packages</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <p class="text-muted">
+                        <i class="fas fa-phone"></i> +91 7666917917<br>
+                        <i class="fas fa-envelope"></i> info@caretrip.in
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center text-muted">
+                <p>&copy; 2024 Caretrip. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -189,7 +277,7 @@
                             <label class="form-label">Check-out</label>
                             <input type="date" class="form-control" id="bookingCheckOut" required>
                         </div>
-                        <div class="mb-3"><h5>Total: $<span id="bookingTotal">0</span></h5></div>
+                        <div class="mb-3"><h5>Total: ₹<span id="bookingTotal">0</span></h5></div>
                         <button type="submit" class="btn btn-success w-100">Confirm Booking</button>
                     </form>
                 </div>
