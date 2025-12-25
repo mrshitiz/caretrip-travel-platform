@@ -12,6 +12,7 @@ const defaultSettings = {
     companyName: 'Caretrip',
     companyTagline: 'We Care Your Travel',
     logoUrl: 'https://www.caretrip.in/siteimages/logo_dark.png?v=2',
+    footerLogoUrl: 'https://www.caretrip.in/siteimages/logo_light.png?v=2', // NEW: Separate footer logo
     phoneNumber: '+91 7666917917',
     whatsappNumber: '+917666917917',
     emailAddress: 'info@caretrip.in',
@@ -145,11 +146,17 @@ function initializeSettings() {
     document.getElementById('companyName').value = settings.companyName;
     document.getElementById('companyTagline').value = settings.companyTagline;
     document.getElementById('logoUrl').value = settings.logoUrl;
+    document.getElementById('footerLogoUrl').value = settings.footerLogoUrl || settings.logoUrl; // NEW
     
     // Update logo preview
     const logoPreview = document.getElementById('logoPreview');
     logoPreview.innerHTML = `<img src="${settings.logoUrl}" alt="Logo">`;
     logoPreview.classList.remove('empty');
+    
+    // Update footer logo preview
+    const footerLogoPreview = document.getElementById('footerLogoPreview');
+    footerLogoPreview.innerHTML = `<img src="${settings.footerLogoUrl || settings.logoUrl}" alt="Footer Logo">`;
+    footerLogoPreview.classList.remove('empty');
     
     // Populate contact info form
     document.getElementById('phoneNumber').value = settings.phoneNumber;
@@ -165,7 +172,7 @@ function initializeSettings() {
     document.getElementById('linkedinUrl').value = settings.linkedinUrl || '';
 }
 
-// Logo file upload handler
+// Logo file upload handler (Navbar)
 document.getElementById('companyLogo').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -182,6 +189,23 @@ document.getElementById('companyLogo').addEventListener('change', (e) => {
     }
 });
 
+// Footer Logo file upload handler (NEW)
+document.getElementById('footerLogo').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const footerLogoPreview = document.getElementById('footerLogoPreview');
+            footerLogoPreview.innerHTML = `<img src="${event.target.result}" alt="Footer Logo">`;
+            footerLogoPreview.classList.remove('empty');
+            
+            // Update footer logo URL field
+            document.getElementById('footerLogoUrl').value = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
 // Company info form handler
 document.getElementById('companyInfoForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -190,6 +214,7 @@ document.getElementById('companyInfoForm').addEventListener('submit', (e) => {
     settings.companyName = document.getElementById('companyName').value;
     settings.companyTagline = document.getElementById('companyTagline').value;
     settings.logoUrl = document.getElementById('logoUrl').value;
+    settings.footerLogoUrl = document.getElementById('footerLogoUrl').value; // NEW
     
     saveSettings(settings);
     showToast('Company information saved successfully!', 'success');
@@ -227,119 +252,23 @@ document.getElementById('socialLinksForm').addEventListener('submit', (e) => {
 // Load dashboard data
 async function loadDashboardData() {
     try {
-        // Load stats
-        const statsResponse = await fetch('/api/admin/stats');
-        if (statsResponse.ok) {
-            const stats = await statsResponse.json();
-            document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
-            document.getElementById('totalBookings').textContent = stats.totalBookings || 0;
-            document.getElementById('totalRevenue').textContent = `₹${(stats.totalRevenue || 0).toLocaleString('en-IN')}`;
-            document.getElementById('totalDestinations').textContent = stats.totalDestinations || 0;
-        }
-
-        // Load bookings
-        const bookingsResponse = await fetch('/api/bookings');
-        if (bookingsResponse.ok) {
-            const bookings = await bookingsResponse.json();
-            displayBookings(bookings);
-        }
-
-        // Load users
-        loadUsers();
+        // Fetch stats from API
+        const response = await fetch('/api/admin/stats');
+        const stats = await response.json();
+        
+        // Update stats cards
+        document.getElementById('totalUsers').textContent = stats.totalUsers || 0;
+        document.getElementById('totalBookings').textContent = stats.totalBookings || 0;
+        document.getElementById('totalRevenue').textContent = `₹${(stats.totalRevenue || 0).toLocaleString('en-IN')}`;
+        document.getElementById('totalDestinations').textContent = stats.totalDestinations || 0;
     } catch (error) {
         console.error('Error loading dashboard data:', error);
+        // Set default values if API fails
+        document.getElementById('totalUsers').textContent = '0';
+        document.getElementById('totalBookings').textContent = '0';
+        document.getElementById('totalRevenue').textContent = '₹0';
+        document.getElementById('totalDestinations').textContent = '0';
     }
-}
-
-// Display bookings in table
-function displayBookings(bookings) {
-    const tbody = document.getElementById('bookingsTable');
-    
-    if (bookings.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted">No bookings yet</td></tr>';
-        return;
-    }
-    
-    tbody.innerHTML = bookings.map(booking => `
-        <tr>
-            <td><strong>#${booking.id}</strong></td>
-            <td>User ${booking.userId}</td>
-            <td><span class="badge bg-info">${booking.type}</span></td>
-            <td>${booking.travelers}</td>
-            <td>${new Date(booking.checkIn).toLocaleDateString('en-IN')}</td>
-            <td>${new Date(booking.checkOut).toLocaleDateString('en-IN')}</td>
-            <td><strong>₹${booking.totalPrice.toLocaleString('en-IN')}</strong></td>
-            <td><span class="badge bg-success">${booking.status}</span></td>
-            <td>
-                <button class="btn btn-sm btn-primary btn-action" onclick="viewBooking(${booking.id})">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="btn btn-sm btn-danger btn-action" onclick="deleteBooking(${booking.id})">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        </tr>
-    `).join('');
-}
-
-// Load users (mock data for now)
-function loadUsers() {
-    const users = [
-        { id: 1, name: 'Admin User', email: 'admin@caretrip.com', role: 'admin' },
-        { id: 2, name: 'John Doe', email: 'user@example.com', role: 'user' }
-    ];
-    
-    const tbody = document.getElementById('usersTable');
-    tbody.innerHTML = users.map(user => `
-        <tr>
-            <td><strong>#${user.id}</strong></td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td><span class="badge ${user.role === 'admin' ? 'bg-danger' : 'bg-primary'}">${user.role}</span></td>
-            <td>
-                <button class="btn btn-sm btn-info btn-action" onclick="editUser(${user.id})">
-                    <i class="fas fa-edit"></i>
-                </button>
-                ${user.role !== 'admin' ? `
-                    <button class="btn btn-sm btn-danger btn-action" onclick="deleteUser(${user.id})">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                ` : ''}
-            </td>
-        </tr>
-    `).join('');
-}
-
-// View booking details
-function viewBooking(id) {
-    alert(`View booking #${id} - Feature coming soon!`);
-}
-
-// Delete booking
-async function deleteBooking(id) {
-    if (confirm('Are you sure you want to delete this booking?')) {
-        // In production, make API call to delete
-        showToast('Booking deleted successfully!', 'success');
-        loadDashboardData();
-    }
-}
-
-// Edit user
-function editUser(id) {
-    alert(`Edit user #${id} - Feature coming soon!`);
-}
-
-// Delete user
-function deleteUser(id) {
-    if (confirm('Are you sure you want to delete this user?')) {
-        showToast('User deleted successfully!', 'success');
-        loadUsers();
-    }
-}
-
-// Export settings for use in main website
-function exportSettings() {
-    return loadSettings();
 }
 
 // Initialize on page load
