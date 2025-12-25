@@ -1,6 +1,97 @@
 let currentUser = null;
 
+// Load website settings from localStorage
+function loadWebsiteSettings() {
+    const SETTINGS_KEY = 'caretrip_website_settings';
+    const savedSettings = localStorage.getItem(SETTINGS_KEY);
+    
+    if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        
+        // Update logo in navbar
+        const navbarLogo = document.querySelector('.navbar-brand img');
+        if (navbarLogo && settings.logoUrl) {
+            navbarLogo.src = settings.logoUrl;
+            navbarLogo.alt = settings.companyName || 'Caretrip';
+        }
+        
+        // Update logo in footer
+        const footerLogo = document.querySelector('footer .logo img');
+        if (footerLogo && settings.logoUrl) {
+            footerLogo.src = settings.logoUrl;
+            footerLogo.alt = settings.companyName || 'Caretrip';
+        }
+        
+        // Update page title
+        if (settings.companyName) {
+            document.title = `${settings.companyName} - ${settings.companyTagline || 'We Care Your Travel'}`;
+        }
+        
+        // Update phone number in top bar
+        const phoneLink = document.querySelector('.top-bar a[href^="tel:"]');
+        if (phoneLink && settings.phoneNumber) {
+            phoneLink.href = `tel:${settings.phoneNumber.replace(/\s/g, '')}`;
+            phoneLink.innerHTML = `<i class="fas fa-phone"></i> ${settings.phoneNumber}`;
+        }
+        
+        // Update footer contact info
+        const footerPhone = document.querySelector('footer a[href^="tel:"]');
+        if (footerPhone && settings.phoneNumber) {
+            footerPhone.href = `tel:${settings.phoneNumber.replace(/\s/g, '')}`;
+            footerPhone.innerHTML = `<i class="fas fa-phone me-2"></i>${settings.phoneNumber}`;
+        }
+        
+        const footerWhatsApp = document.querySelector('footer a[href^="https://wa.me"]');
+        if (footerWhatsApp && settings.whatsappNumber) {
+            footerWhatsApp.href = `https://wa.me/${settings.whatsappNumber.replace(/\D/g, '')}`;
+            footerWhatsApp.innerHTML = `<i class="fab fa-whatsapp me-2"></i>${settings.phoneNumber}`;
+        }
+        
+        const footerEmail = document.querySelector('footer a[href^="mailto:"]');
+        if (footerEmail && settings.emailAddress) {
+            footerEmail.href = `mailto:${settings.emailAddress}`;
+            footerEmail.innerHTML = `<i class="fas fa-envelope me-2"></i>${settings.emailAddress}`;
+        }
+        
+        // Update office address
+        const addressElement = document.querySelector('footer p:has(i.fa-map-marker-alt)');
+        if (addressElement && settings.officeAddress) {
+            addressElement.innerHTML = `<i class="fas fa-map-marker-alt me-2"></i>${settings.officeAddress}`;
+        }
+        
+        // Update social media links
+        const socialLinks = {
+            facebook: document.querySelector('footer a[href*="facebook"]'),
+            instagram: document.querySelector('footer a[href*="instagram"]'),
+            youtube: document.querySelector('footer a[href*="youtube"]'),
+            twitter: document.querySelector('footer a[href*="twitter"]'),
+            linkedin: document.querySelector('footer a[href*="linkedin"]')
+        };
+        
+        if (socialLinks.facebook && settings.facebookUrl) {
+            socialLinks.facebook.href = settings.facebookUrl;
+        }
+        if (socialLinks.instagram && settings.instagramUrl) {
+            socialLinks.instagram.href = settings.instagramUrl;
+        }
+        if (socialLinks.youtube && settings.youtubeUrl) {
+            socialLinks.youtube.href = settings.youtubeUrl;
+        }
+        if (socialLinks.twitter && settings.twitterUrl) {
+            socialLinks.twitter.href = settings.twitterUrl;
+            socialLinks.twitter.style.display = settings.twitterUrl ? '' : 'none';
+        }
+        if (socialLinks.linkedin && settings.linkedinUrl) {
+            socialLinks.linkedin.href = settings.linkedinUrl;
+            socialLinks.linkedin.style.display = settings.linkedinUrl ? '' : 'none';
+        }
+        
+        console.log('Website settings loaded successfully!');
+    }
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
+    loadWebsiteSettings(); // Load settings first
     await checkAuth();
     loadDestinations();
     loadHotels();
