@@ -35,6 +35,10 @@ function setupEventListeners() {
     });
 }
 
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
 async function handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('loginEmail').value;
@@ -132,18 +136,18 @@ async function loadDestinations(search = '') {
         
         const grid = document.getElementById('destinationsGrid');
         grid.innerHTML = destinations.map(dest => `
-            <div class="col-md-4">
+            <div class="col-md-4 col-lg-3">
                 <div class="card">
                     <img src="${dest.image}" class="card-img-top" alt="${dest.name}">
                     <div class="card-body">
                         <h5 class="card-title">${dest.name}</h5>
-                        <p class="card-text">${dest.description}</p>
+                        <p class="card-text">${dest.description.substring(0, 80)}...</p>
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="badge bg-primary">${dest.duration}</span>
                             <span class="badge bg-warning text-dark"><i class="fas fa-star"></i> ${dest.rating}</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="text-primary mb-0">$${dest.price}</h4>
+                            <h5 class="text-primary mb-0">₹${dest.price}</h5>
                             <button class="btn btn-primary btn-sm" onclick="openBookingModal('package', ${dest.id}, ${dest.price})">Book Now</button>
                         </div>
                     </div>
@@ -162,18 +166,18 @@ async function loadHotels(location = '') {
         
         const grid = document.getElementById('hotelsGrid');
         grid.innerHTML = hotels.map(hotel => `
-            <div class="col-md-4">
+            <div class="col-md-4 col-lg-3">
                 <div class="card">
                     <img src="${hotel.image}" class="card-img-top" alt="${hotel.name}">
                     <div class="card-body">
                         <h5 class="card-title">${hotel.name}</h5>
-                        <p class="card-text"><i class="fas fa-map-marker-alt"></i> ${hotel.location}</p>
+                        <p class="card-text"><i class="fas fa-map-marker-alt text-primary"></i> ${hotel.location}</p>
                         <div class="mb-3">
                             ${hotel.amenities.map(a => `<span class="badge bg-secondary me-1">${a}</span>`).join('')}
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="text-primary mb-0">$${hotel.price}</h5>
+                                <h5 class="text-primary mb-0">₹${hotel.price}</h5>
                                 <small class="text-muted">per night</small>
                             </div>
                             <button class="btn btn-primary btn-sm" onclick="openBookingModal('hotel', ${hotel.id}, ${hotel.price})">Book Now</button>
@@ -204,18 +208,18 @@ async function loadFlights(from = '', to = '') {
                         <div class="row text-center mb-3">
                             <div class="col-5">
                                 <h4>${flight.from}</h4>
-                                <p class="mb-0">${flight.departure}</p>
+                                <p class="mb-0 text-muted">${flight.departure}</p>
                             </div>
                             <div class="col-2">
                                 <i class="fas fa-plane fa-2x text-primary"></i>
                             </div>
                             <div class="col-5">
                                 <h4>${flight.to}</h4>
-                                <p class="mb-0">${flight.arrival}</p>
+                                <p class="mb-0 text-muted">${flight.arrival}</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="text-primary mb-0">$${flight.price}</h4>
+                            <h4 class="text-primary mb-0">₹${flight.price}</h4>
                             <button class="btn btn-primary" onclick="openBookingModal('flight', ${flight.id}, ${flight.price})">Book Flight</button>
                         </div>
                     </div>
@@ -225,25 +229,6 @@ async function loadFlights(from = '', to = '') {
     } catch (error) {
         console.error('Error loading flights:', error);
     }
-}
-
-function searchPackages() {
-    const search = document.getElementById('packageSearch').value;
-    loadDestinations(search);
-    document.getElementById('destinations').scrollIntoView({ behavior: 'smooth' });
-}
-
-function searchHotels() {
-    const location = document.getElementById('hotelLocation').value;
-    loadHotels(location);
-    document.getElementById('hotels').scrollIntoView({ behavior: 'smooth' });
-}
-
-function searchFlights() {
-    const from = document.getElementById('flightFrom').value;
-    const to = document.getElementById('flightTo').value;
-    loadFlights(from, to);
-    document.getElementById('flights').scrollIntoView({ behavior: 'smooth' });
 }
 
 function openBookingModal(type, itemId, price) {
@@ -266,7 +251,7 @@ function updateBookingTotal() {
     const price = parseFloat(document.getElementById('bookingPrice').value);
     const travelers = parseInt(document.getElementById('bookingTravelers').value);
     const total = price * travelers;
-    document.getElementById('bookingTotal').textContent = total;
+    document.getElementById('bookingTotal').textContent = total.toLocaleString('en-IN');
 }
 
 async function handleBooking(e) {
@@ -278,7 +263,7 @@ async function handleBooking(e) {
         travelers: parseInt(document.getElementById('bookingTravelers').value),
         checkIn: document.getElementById('bookingCheckIn').value,
         checkOut: document.getElementById('bookingCheckOut').value,
-        totalPrice: parseFloat(document.getElementById('bookingTotal').textContent)
+        totalPrice: parseFloat(document.getElementById('bookingTotal').textContent.replace(/,/g, ''))
     };
     
     try {
@@ -291,7 +276,7 @@ async function handleBooking(e) {
         const data = await response.json();
         if (data.success) {
             bootstrap.Modal.getInstance(document.getElementById('bookingModal')).hide();
-            showAlert('Booking confirmed!', 'success');
+            showAlert('Booking confirmed! Check your bookings page.', 'success');
         } else {
             showAlert(data.error || 'Booking failed', 'danger');
         }
@@ -307,7 +292,7 @@ async function loadBookings() {
         
         const content = document.getElementById('bookingsContent');
         if (bookings.length === 0) {
-            content.innerHTML = '<p class="text-center">No bookings yet.</p>';
+            content.innerHTML = '<p class="text-center">No bookings yet. Start exploring!</p>';
             return;
         }
         
@@ -323,7 +308,7 @@ async function loadBookings() {
                             <p><strong>Check-out:</strong> ${booking.checkOut}</p>
                         </div>
                         <div class="col-md-4 text-end">
-                            <h4 class="text-primary">$${booking.totalPrice}</h4>
+                            <h4 class="text-primary">₹${booking.totalPrice.toLocaleString('en-IN')}</h4>
                             <span class="badge bg-success">${booking.status}</span>
                         </div>
                     </div>
@@ -365,7 +350,7 @@ async function loadAdminDashboard() {
             <div class="col-md-3">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h3>$${stats.totalRevenue}</h3>
+                        <h3>₹${stats.totalRevenue.toLocaleString('en-IN')}</h3>
                         <p>Total Revenue</p>
                     </div>
                 </div>
@@ -400,7 +385,7 @@ async function loadAdminDashboard() {
                                 <td>${b.userId}</td>
                                 <td>${b.type}</td>
                                 <td>${b.travelers}</td>
-                                <td>$${b.totalPrice}</td>
+                                <td>₹${b.totalPrice.toLocaleString('en-IN')}</td>
                                 <td><span class="badge bg-success">${b.status}</span></td>
                             </tr>
                         `).join('')}
