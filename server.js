@@ -27,24 +27,32 @@ let users = [
 ];
 
 let destinations = [
-  { id: 1, name: 'Paris, France', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800', price: 1299, rating: 4.8, duration: '7 Days', description: 'Explore the City of Light with guided tours of Eiffel Tower, Louvre, and more.' },
-  { id: 2, name: 'Bali, Indonesia', image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800', price: 899, rating: 4.9, duration: '5 Days', description: 'Tropical paradise with beaches, temples, and vibrant culture.' },
-  { id: 3, name: 'Tokyo, Japan', image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800', price: 1599, rating: 4.7, duration: '6 Days', description: 'Modern metropolis meets ancient traditions.' },
-  { id: 4, name: 'Santorini, Greece', image: 'https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800', price: 1199, rating: 4.9, duration: '5 Days', description: 'Stunning sunsets and white-washed buildings.' },
-  { id: 5, name: 'Dubai, UAE', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800', price: 1099, rating: 4.6, duration: '4 Days', description: 'Luxury shopping, ultramodern architecture.' },
-  { id: 6, name: 'New York, USA', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800', price: 1399, rating: 4.8, duration: '6 Days', description: 'The city that never sleeps.' }
+  { id: 1, name: 'Goa, India', image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800', price: 15999, rating: 4.8, duration: '5 Days', description: 'Beautiful beaches, Portuguese heritage, vibrant nightlife and water sports.' },
+  { id: 2, name: 'Kerala, India', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800', price: 18999, rating: 4.9, duration: '6 Days', description: 'Gods Own Country - backwaters, houseboats, hill stations and Ayurveda.' },
+  { id: 3, name: 'Rajasthan, India', image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800', price: 22999, rating: 4.7, duration: '7 Days', description: 'Royal palaces, desert safaris, forts and rich cultural heritage.' },
+  { id: 4, name: 'Manali, India', image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=800', price: 12999, rating: 4.9, duration: '4 Days', description: 'Snow-capped mountains, adventure sports, Rohtang Pass and scenic valleys.' },
+  { id: 5, name: 'Andaman, India', image: 'https://images.unsplash.com/photo-1589197331516-6c0c24e5e7c9?w=800', price: 28999, rating: 4.8, duration: '6 Days', description: 'Pristine beaches, coral reefs, water sports and tropical paradise.' },
+  { id: 6, name: 'Ladakh, India', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', price: 24999, rating: 4.9, duration: '7 Days', description: 'High altitude desert, monasteries, Pangong Lake and adventure.' },
+  { id: 7, name: 'Shimla, India', image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=800', price: 11999, rating: 4.6, duration: '4 Days', description: 'Colonial architecture, Mall Road, toy train and scenic hill station.' },
+  { id: 8, name: 'Udaipur, India', image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800', price: 16999, rating: 4.8, duration: '5 Days', description: 'City of Lakes, royal palaces, Lake Pichola and romantic getaway.' }
 ];
 
 let hotels = [
-  { id: 1, name: 'Grand Hotel Paris', location: 'Paris, France', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800', price: 250, rating: 4.7, amenities: ['WiFi', 'Pool', 'Spa', 'Restaurant'] },
-  { id: 2, name: 'Bali Beach Resort', location: 'Bali, Indonesia', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800', price: 180, rating: 4.8, amenities: ['Beach', 'Pool', 'Spa', 'Bar'] },
-  { id: 3, name: 'Tokyo Imperial Hotel', location: 'Tokyo, Japan', image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800', price: 300, rating: 4.9, amenities: ['WiFi', 'Gym', 'Restaurant'] }
+  { id: 1, name: 'Taj Exotica', location: 'Goa, India', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800', price: 8500, rating: 4.8, amenities: ['Beach', 'Pool', 'Spa', 'Restaurant'] },
+  { id: 2, name: 'Kumarakom Lake Resort', location: 'Kerala, India', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800', price: 12000, rating: 4.9, amenities: ['Backwater', 'Pool', 'Ayurveda', 'Houseboat'] },
+  { id: 3, name: 'The Oberoi Udaivilas', location: 'Udaipur, India', image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800', price: 25000, rating: 4.9, amenities: ['Lake View', 'Spa', 'Fine Dining', 'Heritage'] },
+  { id: 4, name: 'Wildflower Hall', location: 'Shimla, India', image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800', price: 15000, rating: 4.7, amenities: ['Mountain View', 'Spa', 'Gym', 'Restaurant'] },
+  { id: 5, name: 'The Grand Dragon', location: 'Ladakh, India', image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800', price: 6500, rating: 4.6, amenities: ['WiFi', 'Restaurant', 'Oxygen', 'Heating'] },
+  { id: 6, name: 'Symphony Palms', location: 'Andaman, India', image: 'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800', price: 9500, rating: 4.8, amenities: ['Beach', 'Pool', 'Water Sports', 'Bar'] }
 ];
 
 let flights = [
-  { id: 1, from: 'NYC', to: 'Paris', airline: 'Air France', price: 650, departure: '08:00 AM', arrival: '10:00 PM', duration: '7h 30m' },
-  { id: 2, from: 'LA', to: 'Tokyo', airline: 'Japan Airlines', price: 850, departure: '11:00 AM', arrival: '3:00 PM +1', duration: '11h 30m' },
-  { id: 3, from: 'London', to: 'Dubai', airline: 'Emirates', price: 550, departure: '02:00 PM', arrival: '11:30 PM', duration: '6h 30m' }
+  { id: 1, from: 'Delhi', to: 'Goa', airline: 'IndiGo', price: 4500, departure: '06:00 AM', arrival: '08:30 AM', duration: '2h 30m' },
+  { id: 2, from: 'Mumbai', to: 'Kochi', airline: 'Air India', price: 5200, departure: '09:00 AM', arrival: '11:15 AM', duration: '2h 15m' },
+  { id: 3, from: 'Delhi', to: 'Leh', airline: 'SpiceJet', price: 6800, departure: '05:30 AM', arrival: '07:00 AM', duration: '1h 30m' },
+  { id: 4, from: 'Bangalore', to: 'Port Blair', airline: 'Vistara', price: 8500, departure: '10:00 AM', arrival: '01:30 PM', duration: '3h 30m' },
+  { id: 5, from: 'Delhi', to: 'Udaipur', airline: 'IndiGo', price: 4200, departure: '07:00 AM', arrival: '08:30 AM', duration: '1h 30m' },
+  { id: 6, from: 'Chandigarh', to: 'Shimla', airline: 'Air Taxi', price: 3500, departure: '08:00 AM', arrival: '08:45 AM', duration: '45m' }
 ];
 
 let bookings = [];
