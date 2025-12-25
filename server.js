@@ -58,6 +58,22 @@ let flights = [
 let bookings = [];
 let bookingIdCounter = 1;
 
+// Website Settings Storage (in production, use database)
+let websiteSettings = {
+  companyName: 'Caretrip',
+  companyTagline: 'We Care Your Travel',
+  logoUrl: 'https://www.caretrip.in/siteimages/logo_dark.png?v=2',
+  phoneNumber: '+91 7666917917',
+  whatsappNumber: '+917666917917',
+  emailAddress: 'info@caretrip.in',
+  officeAddress: '1/7119, 4th Floor, Post Office Street, Shivaji Park, Shahdara, Delhi - 110032',
+  facebookUrl: 'https://www.facebook.com/caretrip',
+  instagramUrl: 'https://www.instagram.com/caretrip_in',
+  youtubeUrl: 'https://www.youtube.com/@caretrip_in',
+  twitterUrl: '',
+  linkedinUrl: ''
+};
+
 // Auth Routes
 app.post('/api/register', async (req, res) => {
   const { email, password, name } = req.body;
@@ -145,6 +161,20 @@ app.get('/api/admin/stats', (req, res) => {
     totalRevenue: bookings.reduce((sum, b) => sum + b.totalPrice, 0),
     totalDestinations: destinations.length
   });
+});
+
+// Website Settings API
+app.get('/api/settings', (req, res) => {
+  res.json(websiteSettings);
+});
+
+app.post('/api/settings', (req, res) => {
+  if (!req.session.userId) return res.status(401).json({ error: 'Not authenticated' });
+  const user = users.find(u => u.id === req.session.userId);
+  if (user.role !== 'admin') return res.status(403).json({ error: 'Admin access required' });
+  
+  websiteSettings = { ...websiteSettings, ...req.body };
+  res.json({ success: true, settings: websiteSettings });
 });
 
 app.listen(PORT, () => console.log(`Caretrip running on port ${PORT}`));
