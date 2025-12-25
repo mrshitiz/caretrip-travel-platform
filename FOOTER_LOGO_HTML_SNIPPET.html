@@ -1,0 +1,25 @@
+<!-- ADD THIS SECTION AFTER THE NAVBAR LOGO SECTION IN admin.html -->
+<!-- Insert after line 563 (after logoUrl div closes) -->
+
+<div class="mb-3">
+    <label class="form-label">Footer Logo (Optional)</label>
+    <input type="file" class="form-control" id="footerLogo" accept="image/*">
+    <small class="text-muted">Upload a different logo for footer (e.g., light logo for dark background)</small>
+    <div class="image-preview empty" id="footerLogoPreview">
+        <img src="https://www.caretrip.in/siteimages/logo_light.png?v=2" alt="Footer Logo">
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Footer Logo URL (Alternative)</label>
+    <input type="url" class="form-control" id="footerLogoUrl" value="https://www.caretrip.in/siteimages/logo_light.png?v=2" placeholder="https://example.com/footer-logo.png">
+    <small class="text-muted">Or paste a direct URL to your footer logo (leave empty to use navbar logo)</small>
+</div>
+
+<!-- INSTRUCTIONS:
+1. Open public/admin.html
+2. Find line ~563 (after the logoUrl input field closes with </div>)
+3. Paste the above HTML code
+4. Save the file
+5. The admin.js file is already updated to handle this!
+-->
